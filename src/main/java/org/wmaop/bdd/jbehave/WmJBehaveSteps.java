@@ -5,6 +5,7 @@ import java.util.List;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.Alias;
+import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -60,11 +61,13 @@ public class WmJBehaveSteps  {
 
 		
 		@Given("$assertionId assertion $interceptPoint service $serviceName when $jexlPipelineExpression")
+		@Alias("$assertionId event $interceptPoint service $serviceName when $jexlPipelineExpression")
 		public void assertion_service_when(String assertionId, InterceptPoint interceptPoint, String serviceName, String expression) {
 			ThreadContext.get().withAssertion(assertionId, interceptPoint, serviceName, expression);
 		}
 		
 		@Given("$assertionId assertion $interceptPoint service $serviceName always")
+		@Alias("$assertionId event $interceptPoint service $serviceName always")
 		public void assertion_service(String assertionId, String interceptPoint, String serviceName) {
 			ThreadContext.get().withAssertion(assertionId, interceptPoint, serviceName);
 		}
@@ -111,7 +114,8 @@ public class WmJBehaveSteps  {
 		 */
 		
 		@Then("assertion $assertionId was invoked $invokeCount times")
-		@Alias("mock $assertionId was invoked $invokeCount times")
+		@Aliases(values={"mock $assertionId was invoked $invokeCount times",
+						"event $assertionId happened $invokeCount times"})
 		public void assertion_was_invoked_times(String assertionId, int invokeCount) throws Throwable {
 			ThreadContext.get().withAssertionInvokeCount(assertionId, invokeCount);
 		}
